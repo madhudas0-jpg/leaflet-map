@@ -1,0 +1,28 @@
+---
+title: "Interactive Leaflet Map Webpage"
+author: "MadhuDas"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+## 🌍 Interactive Map Using Leaflet
+
+This webpage was created using **R Markdown** and features an **interactive Leaflet map**.  
+The date shown above indicates when this document was created.
+
+---
+
+```{r message=FALSE, warning=FALSE}
+library(leaflet)
+
+leaflet() %>%
+  addTiles() %>%
+  addMarkers(
+    lng = c(-74.0060, 2.3522, 77.2090),
+    lat = c(40.7128, 48.8566, 28.6139),
+    popup = c(
+      "New York City, USA",
+      "Paris, France",
+      "New Delhi, India"
+    )
+  )
