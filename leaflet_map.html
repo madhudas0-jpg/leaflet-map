@@ -1,28 +1,51 @@
----
-title: "Interactive Leaflet Map Webpage"
-author: "MadhuDas"
-date: "`r Sys.Date()`"
-output: html_document
----
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Interactive Leaflet Map Webpage</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    #map { height: 600px; width: 100%; margin-top: 20px; }
+    h1 { color: #2c3e50; }
+    p.date { color: #555; font-style: italic; }
+  </style>
+</head>
+<body>
 
-## 🌍 Interactive Map Using Leaflet
+  <h1>Interactive Leaflet Map Webpage</h1>
+  <p class="date">Created on: <span id="today"></span></p>
+  <p>This webpage demonstrates an interactive map with Leaflet and clickable markers.</p>
 
-This webpage was created using **R Markdown** and features an **interactive Leaflet map**.  
-The date shown above indicates when this document was created.
+  <div id="map"></div>
 
----
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script>
+    // Set today's date
+    document.getElementById("today").textContent = new Date().toLocaleDateString();
 
-```{r message=FALSE, warning=FALSE}
-library(leaflet)
+    // Initialize map
+    var map = L.map('map').setView([30, 0], 2); // Centered roughly on the world
 
-leaflet() %>%
-  addTiles() %>%
-  addMarkers(
-    lng = c(-74.0060, 2.3522, 77.2090),
-    lat = c(40.7128, 48.8566, 28.6139),
-    popup = c(
-      "New York City, USA",
-      "Paris, France",
-      "New Delhi, India"
-    )
-  )
+    // Add OpenStreetMap tiles
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    // Add markers
+    var markers = [
+      {coords: [40.7128, -74.0060], popup: "New York City, USA"},
+      {coords: [48.8566, 2.3522], popup: "Paris, France"},
+      {coords: [28.6139, 77.2090], popup: "New Delhi, India"}
+    ];
+
+    markers.forEach(function(m) {
+      L.marker(m.coords).addTo(map).bindPopup(m.popup);
+    });
+  </script>
+</body>
+</html>
+
